@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import '../geo.dart';
 import 'package:geolocator/geolocator.dart';
 
+
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
@@ -30,6 +31,8 @@ class HomePage extends StatelessWidget {
 
   }
 
+
+
 Future<void> sendData() async {
   try {
     Future<Position> position = determinePosition();
@@ -41,6 +44,7 @@ Future<void> sendData() async {
       'latitude': result.latitude,
       'longitude': result.longitude
     });
+
     print("finished");
   } catch (error) {
     print("Error occurred while sending data: $error");
