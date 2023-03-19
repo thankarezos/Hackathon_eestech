@@ -2,6 +2,8 @@ import 'package:hello_ok/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import '../geo.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -24,21 +26,23 @@ class HomePage extends StatelessWidget {
     return ElevatedButton(onPressed: signOut, child: const Text('Sign out'));
   }
 
+  Widget _senddata() {
+    return ElevatedButton(onPressed: sendData, child: const Text('Send Data'));
+  }
+
   Future<void> sendData() async {
-    // create a reference to the Firebase Realtime Database location
-    DatabaseReference geoPositionRef = FirebaseDatabase.instance
-        .ref()
-        .child('locations')
-        .push(); // generate a unique ID for the new data
-
-// create a Map object that contains the geo position data
-    Map<String, dynamic> geoPositionData = {
-      'onoma': '123',
-      'otinani': '800maou',
-    };
-
-// send the data to Firebase Realtime Database
-    await geoPositionRef.set(geoPositionData);
+    try {
+      Future<Position> position = determinePosition();
+      Position result = await position;
+      print('Latitude: ${result.latitude}, Longitude: ${result.longitude}');
+      final databaseReference = FirebaseDatabase.instance.ref();
+      final locationRef = databaseReference.child('locations').push();
+      await locationRef
+          .set({'latitude': result.latitude, 'longitude': result.longitude});
+      print("finished");
+    } catch (error) {
+      print("Error occurred while sending data: $error");
+    }
   }
 
   Widget _sendData() {
@@ -58,7 +62,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[_userUid(), _signOutButton(), _sendData()],
+          children: <Widget>[_userUid(), _signOutButton(), _senddata()],
         ),
       ),
     );
