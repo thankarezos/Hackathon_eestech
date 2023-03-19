@@ -6,9 +6,26 @@ import 'geo.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 
+Future<void> sendData() async {
+  try {
+    Future<Position> position = determinePosition();
+    Position result = await position;
+    print('Latitude: ${result.latitude}, Longitude: ${result.longitude}');
+    final databaseReference = FirebaseDatabase.instance.ref();
+    final locationRef = databaseReference.child('locations').push();
+    await locationRef.set({
+      'latitude': result.latitude,
+      'longitude': result.longitude
+    });
 
+    print("finished");
+  } catch (error) {
+    print("Error occurred while sending data: $error");
+  }
+}
 
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -20,8 +37,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   
+  
   WidgetsFlutterBinding.ensureInitialized();
-
+  
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   const AndroidInitializationSettings initializationSettingsAndroid =
@@ -52,6 +70,7 @@ Future<void> main() async {
   print('Latitude: ${result.latitude}, Longitude: ${result.longitude}');
   
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  sendData();
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   // try {
