@@ -49,28 +49,14 @@ Future<void> main() async {
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
 
-  const AndroidNotificationDetails androidPlatformChannelSpecifics =
-      AndroidNotificationDetails(
-    'your_channel_id', // id
-    'your_channel_name', // title
-    importance: Importance.max,
-    priority: Priority.high,
-  );
-  const NotificationDetails platformChannelSpecifics =
-      NotificationDetails(android: androidPlatformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.show(
-    0, // notification id
-    'New Notification', // notification title
-    'Hello Flutter!', // notification body
-    platformChannelSpecifics,
-  );
+
 
   Future<Position> position = determinePosition();
   Position result = await position;
   print('Latitude: ${result.latitude}, Longitude: ${result.longitude}');
   
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  sendData();
+  // sendData();
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   // try {
@@ -99,7 +85,7 @@ Future<void> main() async {
     provisional: false,
     sound: true,
   );
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
   print('Got a message whilst in the foreground!');
   print('Message data: ${message.data}');
 
@@ -107,7 +93,22 @@ Future<void> main() async {
     print('Message also contained a notification: ${message.notification}');
     print('Title: ${message.notification!.title}');
     print('Body: ${message.notification!.body}');
-  }
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'your_channel_id', // id
+      'your_channel_name', // title
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+      0, // notification id
+      message.notification!.title, // notification title
+      message.notification!.body, // notification body
+      platformChannelSpecifics,
+    );
+    }
   });
 
   print('User granted permission: ${settings.authorizationStatus}');
