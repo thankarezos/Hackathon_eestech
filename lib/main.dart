@@ -9,10 +9,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Future<Position> position = determinePosition();
   Position result = await position;
   print('Latitude: ${result.latitude}, Longitude: ${result.longitude}');
-  WidgetsFlutterBinding.ensureInitialized();
+  
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   // try {
