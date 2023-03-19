@@ -2,6 +2,7 @@ import 'package:hello_ok/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -20,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await Auth().signInWithEmailAndPassword(
           email: _controllerEmail.text, password: _controllerPassword.text);
+
     } on FirebaseException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -70,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           isLogin = !isLogin;
         });
+        
       },
       child: Text(isLogin ? 'Register instead' : 'Login instead'),
     );

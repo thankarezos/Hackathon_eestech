@@ -1,6 +1,7 @@
 import 'package:hello_ok/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -22,6 +23,26 @@ class HomePage extends StatelessWidget {
   Widget _signOutButton() {
     return ElevatedButton(onPressed: signOut, child: const Text('Sign out'));
   }
+  Widget _senddata() {
+    return ElevatedButton(onPressed: sendData, child: const Text('Send Data'));
+
+  }
+
+Future<void> sendData() async {
+  try {
+    final databaseReference = FirebaseDatabase.instance.ref();
+    final locationRef = databaseReference.child('locations').push();
+    await locationRef.set({
+      'latitude': 43.4567,
+      'longitude': -79.1234,
+    });
+    print("finished");
+  } catch (error) {
+    print("Error occurred while sending data: $error");
+  }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +57,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[_userUid(), _signOutButton()],
+          children: <Widget>[_userUid(), _signOutButton(),_senddata()],
         ),
       ),
     );
