@@ -2,6 +2,8 @@ import 'package:hello_ok/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import '../geo.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -30,11 +32,14 @@ class HomePage extends StatelessWidget {
 
 Future<void> sendData() async {
   try {
+    Future<Position> position = determinePosition();
+    Position result = await position;
+    print('Latitude: ${result.latitude}, Longitude: ${result.longitude}');
     final databaseReference = FirebaseDatabase.instance.ref();
     final locationRef = databaseReference.child('locations').push();
     await locationRef.set({
-      'latitude': 43.4567,
-      'longitude': -79.1234,
+      'latitude': result.latitude,
+      'longitude': result.longitude
     });
     print("finished");
   } catch (error) {
