@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '792311920930',
     projectId: 'helloworld-68ae3',
     authDomain: 'helloworld-68ae3.firebaseapp.com',
+    databaseURL: 'https://helloworld-68ae3-default-rtdb.firebaseio.com',
     storageBucket: 'helloworld-68ae3.appspot.com',
   );
 
@@ -57,6 +58,7 @@ class DefaultFirebaseOptions {
     appId: '1:792311920930:android:e85bcfa1eb44ce5b954d7b',
     messagingSenderId: '792311920930',
     projectId: 'helloworld-68ae3',
+    databaseURL: 'https://helloworld-68ae3-default-rtdb.firebaseio.com',
     storageBucket: 'helloworld-68ae3.appspot.com',
   );
 
@@ -65,6 +67,7 @@ class DefaultFirebaseOptions {
     appId: '1:792311920930:ios:04adb335da50a4b4954d7b',
     messagingSenderId: '792311920930',
     projectId: 'helloworld-68ae3',
+    databaseURL: 'https://helloworld-68ae3-default-rtdb.firebaseio.com',
     storageBucket: 'helloworld-68ae3.appspot.com',
     iosClientId: '792311920930-qb6fl9cfkktd0p02v3j8o96n1o2fni5e.apps.googleusercontent.com',
     iosBundleId: 'com.example.helloOk',
@@ -75,6 +78,7 @@ class DefaultFirebaseOptions {
     appId: '1:792311920930:ios:04adb335da50a4b4954d7b',
     messagingSenderId: '792311920930',
     projectId: 'helloworld-68ae3',
+    databaseURL: 'https://helloworld-68ae3-default-rtdb.firebaseio.com',
     storageBucket: 'helloworld-68ae3.appspot.com',
     iosClientId: '792311920930-qb6fl9cfkktd0p02v3j8o96n1o2fni5e.apps.googleusercontent.com',
     iosBundleId: 'com.example.helloOk',

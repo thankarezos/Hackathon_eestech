@@ -8,7 +8,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-
 Future<void> sendData() async {
   try {
     Future<Position> position = determinePosition();
@@ -16,17 +15,14 @@ Future<void> sendData() async {
     print('Latitude: ${result.latitude}, Longitude: ${result.longitude}');
     final databaseReference = FirebaseDatabase.instance.ref();
     final locationRef = databaseReference.child('locations').push();
-    await locationRef.set({
-      'latitude': result.latitude,
-      'longitude': result.longitude
-    });
+    await locationRef
+        .set({'latitude': result.latitude, 'longitude': result.longitude});
 
     print("finished");
   } catch (error) {
     print("Error occurred while sending data: $error");
   }
 }
-
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -36,10 +32,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> main() async {
-  
-  
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   const AndroidInitializationSettings initializationSettingsAndroid =
@@ -48,13 +42,10 @@ Future<void> main() async {
       InitializationSettings(android: initializationSettingsAndroid);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-
-
-
   Future<Position> position = determinePosition();
   Position result = await position;
   print('Latitude: ${result.latitude}, Longitude: ${result.longitude}');
-  
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // sendData();
   FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -67,10 +58,10 @@ Future<void> main() async {
   //   print("Error occurred while sending data: $error");
   // }
   String? token = await messaging.getToken(
-    vapidKey: "BEPH7ksgap9jdptnEEWF3FzxhGoecsCy_p74SEEONZvXO7pT8U4JFbLO_wFp4qhDM30IKtyjxeXZ9Js0Ort-uWQ"
-  );
+      vapidKey:
+          "BEPH7ksgap9jdptnEEWF3FzxhGoecsCy_p74SEEONZvXO7pT8U4JFbLO_wFp4qhDM30IKtyjxeXZ9Js0Ort-uWQ");
   print(token);
-  
+
   try {
     messaging.subscribeToTopic('msgs');
   } catch (error) {
@@ -85,29 +76,29 @@ Future<void> main() async {
     provisional: false,
     sound: true,
   );
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
-  print('Got a message whilst in the foreground!');
-  print('Message data: ${message.data}');
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    print('Got a message whilst in the foreground!');
+    print('Message data: ${message.data}');
 
-  if (message.notification != null) {
-    print('Message also contained a notification: ${message.notification}');
-    print('Title: ${message.notification!.title}');
-    print('Body: ${message.notification!.body}');
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-      'your_channel_id', // id
-      'your_channel_name', // title
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-      0, // notification id
-      message.notification!.title, // notification title
-      message.notification!.body, // notification body
-      platformChannelSpecifics,
-    );
+    if (message.notification != null) {
+      print('Message also contained a notification: ${message.notification}');
+      print('Title: ${message.notification!.title}');
+      print('Body: ${message.notification!.body}');
+      const AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
+        'your_channel_id', // id
+        'your_channel_name', // title
+        importance: Importance.max,
+        priority: Priority.high,
+      );
+      const NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+      await flutterLocalNotificationsPlugin.show(
+        0, // notification id
+        message.notification!.title, // notification title
+        message.notification!.body, // notification body
+        platformChannelSpecifics,
+      );
     }
   });
 
