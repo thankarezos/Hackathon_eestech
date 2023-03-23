@@ -69,7 +69,8 @@ class DefaultFirebaseOptions {
     projectId: 'helloworld-68ae3',
     databaseURL: 'https://helloworld-68ae3-default-rtdb.firebaseio.com',
     storageBucket: 'helloworld-68ae3.appspot.com',
-    iosClientId: '792311920930-qb6fl9cfkktd0p02v3j8o96n1o2fni5e.apps.googleusercontent.com',
+    iosClientId:
+        '792311920930-qb6fl9cfkktd0p02v3j8o96n1o2fni5e.apps.googleusercontent.com',
     iosBundleId: 'com.example.helloOk',
   );
 
@@ -80,7 +81,8 @@ class DefaultFirebaseOptions {
     projectId: 'helloworld-68ae3',
     databaseURL: 'https://helloworld-68ae3-default-rtdb.firebaseio.com',
     storageBucket: 'helloworld-68ae3.appspot.com',
-    iosClientId: '792311920930-qb6fl9cfkktd0p02v3j8o96n1o2fni5e.apps.googleusercontent.com',
+    iosClientId:
+        '792311920930-qb6fl9cfkktd0p02v3j8o96n1o2fni5e.apps.googleusercontent.com',
     iosBundleId: 'com.example.helloOk',
   );
 }

@@ -47,16 +47,9 @@ Future<void> main() async {
   print('Latitude: ${result.latitude}, Longitude: ${result.longitude}');
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // sendData();
+
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  // try {
-  //   String? token = await messaging.getToken();
-  //   print('Device token: $token');
-  //   messaging.subscribeToTopic('test_topic').then((value) => print('Subscribed to topic'));
-  // } catch (error) {
-  //   print("Error occurred while sending data: $error");
-  // }
+
   String? token = await messaging.getToken(
       vapidKey:
           "BEPH7ksgap9jdptnEEWF3FzxhGoecsCy_p74SEEONZvXO7pT8U4JFbLO_wFp4qhDM30IKtyjxeXZ9Js0Ort-uWQ");
