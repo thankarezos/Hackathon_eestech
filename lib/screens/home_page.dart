@@ -44,7 +44,7 @@ Timer? timer;
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => sendData());
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => sendData());
   }
 
   @override
@@ -90,7 +90,7 @@ Future<void> sendData() async {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[_userUid(), _signOutButton(),_senddata()],
+          children: <Widget>[_userUid(), _signOutButton()],
         ),
       ),
     );
